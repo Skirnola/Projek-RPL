@@ -50,10 +50,12 @@ export default function LoginScreen() {
           style={styles.socialIcon}
         />
       </View>
-      <Text style={styles.signupText}>
-        Tidak Punya Akun?
-        <Text style={{ color: "#FF7A7A" }}> Daftar</Text>
-      </Text>
+      <View style={styles.signupContainer}>
+        <Text style={styles.signupText}>Tidak Punya Akun?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+          <Text style={styles.signupLink}> Daftar</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -125,9 +127,21 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
+  signupContainer: {
+    textAlign: "center",
+    color: "#222",
+    fontWeight: "semibold",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
   signupText: {
     textAlign: "center",
     color: "#222",
     fontWeight: "semibold",
+  },
+  signupLink: {
+    color: "#FF7A7A",
+    align: "center",
   },
 });
