@@ -7,6 +7,8 @@ import RegisterScreen from "./RegisterScreen";
 import HomeScreen from "./HomeScreen";
 import SearchScreen from "./SearchScreen";
 import SavedScreen from "./SavedScreen";
+import NotificationScreen from "./NotificationScreen";
+import ProfileScreen from "./ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +22,8 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Search" component={SearchScreen} />
         <Stack.Screen name="Saved" component={SavedScreen} />
+        <Stack.Screen name="Notification" component={NotificationScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

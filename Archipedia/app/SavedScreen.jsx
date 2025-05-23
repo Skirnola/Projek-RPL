@@ -89,8 +89,12 @@ export default function SavedScreen() {
         <TouchableOpacity style={styles.plusButton}>
           <Ionicons name="add" size={28} color="#fff" />
         </TouchableOpacity>
-        <Ionicons name="notifications" size={24} color="#aaa" />
-        <Ionicons name="person" size={24} color="#aaa" />
+        <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
+          <Ionicons name="notifications" size={24} color="#aaa" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+          <Ionicons name="person" size={24} color="#aaa" />
+        </TouchableOpacity>
       </View>
     </View>
   );
