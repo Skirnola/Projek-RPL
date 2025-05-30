@@ -90,15 +90,24 @@ export default function LoginScreen() {
               img: require("../assets/dadar-padang.jpg"),
             },
           ].map((item, i) => (
-            <View key={i} style={styles.card}>
-              <Image source={item.img} style={styles.cardImage} />
-              <View style={styles.cardContent}>
-                <Text style={styles.cardTitle}>{item.title}</Text>
-                <Text style={styles.cardTime}>Waktu</Text>
-                <Text style={styles.cardTime2}> {item.time}</Text>
+            <TouchableOpacity
+              key={i}
+              style={styles.card}
+              onPress={() =>
+                item.title === "Mie Aceh" && navigation.navigate("MieAceh")
+              }
+              disabled={item.title !== "Mie Aceh"}
+            >
+              <View key={i} style={styles.card}>
+                <Image source={item.img} style={styles.cardImage} />
+                <View style={styles.cardContent}>
+                  <Text style={styles.cardTitle}>{item.title}</Text>
+                  <Text style={styles.cardTime}>Waktu</Text>
+                  <Text style={styles.cardTime2}> {item.time}</Text>
+                </View>
+                <Text style={styles.cardRating}>★ {item.rating}</Text>
               </View>
-              <Text style={styles.cardRating}>★ {item.rating}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
 

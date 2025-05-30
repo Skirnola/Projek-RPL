@@ -9,6 +9,7 @@ import SearchScreen from "./SearchScreen";
 import SavedScreen from "./SavedScreen";
 import NotificationScreen from "./NotificationScreen";
 import ProfileScreen from "./ProfileScreen";
+import MieAceh from "./Makanan/MieAceh";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ export default function App() {
         <Stack.Screen name="Saved" component={SavedScreen} />
         <Stack.Screen name="Notification" component={NotificationScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="MieAceh" component={MieAceh} />
       </Stack.Navigator>
     </NavigationContainer>
   );

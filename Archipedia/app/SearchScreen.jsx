@@ -100,7 +100,6 @@ export default function SearchScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={24} color="#000" />
@@ -108,7 +107,6 @@ export default function SearchScreen() {
         <Text style={styles.title}>Cari Resep</Text>
       </View>
 
-      {/* Search Bar & Filter */}
       <View style={styles.searchRow}>
         <TextInput placeholder="Search recipe" style={styles.searchInput} />
         <TouchableOpacity style={styles.filterButton} onPress={openFilter}>
@@ -116,7 +114,6 @@ export default function SearchScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Filter Modal */}
       <Modal
         visible={isFilterVisible}
         transparent={true}
@@ -127,7 +124,6 @@ export default function SearchScreen() {
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Filter Resep</Text>
 
-            {/* Contoh filter dummy */}
             <TouchableOpacity style={styles.modalButton}>
               <Text>Rating 4+</Text>
             </TouchableOpacity>
@@ -142,7 +138,6 @@ export default function SearchScreen() {
         </View>
       </Modal>
 
-      {/* Recent Searches */}
       <Text style={styles.sectionLabel}>Pencarian Terbaru</Text>
 
       <FlatList
@@ -256,7 +251,6 @@ const styles = StyleSheet.create({
     textShadowRadius: 2,
   },
 
-  // Modal Style
   modalContainer: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.3)",

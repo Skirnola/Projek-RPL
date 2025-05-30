@@ -45,32 +45,48 @@ export default function NotificationScreen() {
         <Text style={styles.sectionTitle}>Today</Text>
         <NotificationCard
           title="Peringatan Resep Baru!"
-          subtitle="Peringatan adanya resep baru yang dibuat oleh Chef Azril"
+          subtitle="Adanya resep baru oleh Chef Azril"
           time="10 menit yang lalu"
         />
         <NotificationCard
           title="Peringatan Resep Baru!"
-          subtitle="Peringatan adanya resep baru yang dibuat oleh Chef Azril"
+          subtitle="Adanya resep baru oleh Chef Azril"
           time="30 menit yang lalu"
         />
         <NotificationCard
-          title="Peringatan Simpan Resep!"
-          subtitle="Peringatan adanya resep baru yang dibuat oleh Chef Azril"
+          title="Peringatan Resep Baru!"
+          subtitle="Adanya resep baru oleh Chef Azril"
           time="30 menit yang lalu"
         />
 
         <Text style={styles.sectionTitle}>Kemarin</Text>
         <NotificationCard
           title="Peringatan Resep Baru!"
-          subtitle="Peringatan adanya resep baru yang dibuat oleh Chef Azril"
+          subtitle="Peringatan adanya resep baru yang"
           time="10 menit yang lalu"
         />
         <NotificationCard
           title="Peringatan Resep Baru!"
-          subtitle="Peringatan adanya resep baru yang dibuat oleh Chef Azril"
+          subtitle="Adanya resep baru oleh Chef Azril"
           time="30 menit yang lalu"
         />
       </ScrollView>
+
+      <View style={styles.bottomNav}>
+        <Ionicons name="home" size={24} color="#FF6B6B" />
+        <TouchableOpacity onPress={() => navigation.navigate("Saved")}>
+          <Ionicons name="bookmark" size={24} color="#aaa" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.plusButton}>
+          <Ionicons name="add" size={28} color="#fff" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
+          <Ionicons name="notifications" size={24} color="#aaa" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+          <Ionicons name="person" size={24} color="#aaa" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -146,5 +162,43 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "flex-start",
+  },
+  bottomNav: {
+    position: "absolute",
+    bottom: 20,
+    left: 30,
+    right: 30,
+    backgroundColor: "#fff",
+    borderRadius: 30,
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    elevation: 5,
+    marginBottom: 10,
+  },
+  addButton: {
+    backgroundColor: "#f67d7d",
+    padding: 10,
+    borderRadius: 30,
+  },
+  addButtonText: {
+    color: "#fff",
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  plusButton: {
+    backgroundColor: "#FF6B6B",
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: -35,
   },
 });
