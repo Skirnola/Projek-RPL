@@ -6,12 +6,60 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function RegisterScreen() {
   const navigation = useNavigation();
   const [isAgreed, setIsAgreed] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleRegister = async () => {
+    if (!name || !email || !password || !confirmPassword) {
+      Alert.alert("Error", "Harap isi semua kolom.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert("Error", "Sandi dan konfirmasi sandi tidak cocok.");
+      return;
+    }
+
+    if (!isAgreed) {
+      Alert.alert("Error", "Harap setujui syarat dan ketentuan.");
+      return;
+    }
+
+    const apiUrl = "http://192.168.1.3:5000/api/auth/register";
+
+    try {
+      console.log("Sending registration data:", { name, email, password });
+      const response = await axios.post(apiUrl, {
+        name,
+        email,
+        password,
+      });
+
+      const { token, user } = response.data;
+      await AsyncStorage.setItem("token", token);
+      await AsyncStorage.setItem("user", JSON.stringify(user));
+
+      Alert.alert("Sukses", "Registrasi berhasil!");
+      navigation.navigate("Home");
+    } catch (error) {
+      console.log("Registration error:", error.response?.data || error.message);
+      Alert.alert(
+        "Error",
+        error.response?.data?.message || "Registrasi gagal. Silakan coba lagi."
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -20,17 +68,33 @@ export default function RegisterScreen() {
         Mari kami bantu Anda menyiapkan akun, tidak akan memakan waktu lama.
       </Text>
 
-      <TextInput placeholder="Masukkan Nama" style={styles.input} />
-      <TextInput placeholder="Masukkan Email" style={styles.input} />
+      <TextInput
+        placeholder="Masukkan Nama"
+        style={styles.input}
+        value={name}
+        onChangeText={setName}
+      />
+      <TextInput
+        placeholder="Masukkan Email"
+        style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
       <TextInput
         placeholder="Masukkan Sandi"
         secureTextEntry
         style={styles.input}
+        value={password}
+        onChangeText={setPassword}
       />
       <TextInput
         placeholder="Tulis Ulang Sandi"
         secureTextEntry
         style={styles.input}
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
       />
 
       <TouchableOpacity
@@ -41,7 +105,7 @@ export default function RegisterScreen() {
         <Text style={styles.agreementText}>Terima syarat & ketentuan</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.registerButton}>
+      <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
         <Text style={styles.registerButtonText}>Daftar</Text>
         <Text style={styles.arrow}>→</Text>
       </TouchableOpacity>

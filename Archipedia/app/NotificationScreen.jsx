@@ -73,7 +73,9 @@ export default function NotificationScreen() {
       </ScrollView>
 
       <View style={styles.bottomNav}>
-        <Ionicons name="home" size={24} color="#FF6B6B" />
+        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+          <Ionicons name="home" size={24} color="#aaa" />
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Saved")}>
           <Ionicons name="bookmark" size={24} color="#aaa" />
         </TouchableOpacity>
@@ -81,7 +83,7 @@ export default function NotificationScreen() {
           <Ionicons name="add" size={28} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
-          <Ionicons name="notifications" size={24} color="#aaa" />
+          <Ionicons name="notifications" size={24} color="#FF6B6B" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
           <Ionicons name="person" size={24} color="#aaa" />

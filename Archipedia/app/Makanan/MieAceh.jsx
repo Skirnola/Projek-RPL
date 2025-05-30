@@ -19,16 +19,22 @@ const RecipeScreen = () => {
   const [playing, setPlaying] = useState(false);
 
   const ingredients = [
-    { name: "Tomat", quantity: "500g", icon: "🍅" },
-    { name: "Kol", quantity: "300g", icon: "🥬" },
-    { name: "Taco", quantity: "300g", icon: "🌮" },
-    { name: "Potongan Roti", quantity: "300g", icon: "🥪" },
+    { name: "Mie Kuning", quantity: "400g", icon: "🍜" },
+    { name: "Daging Sapi", quantity: "300g", icon: "🥩" },
+    { name: "Bawang Merah", quantity: "5 siung", icon: "🧅" },
+    { name: "Bawang Putih", quantity: "3 siung", icon: "🧄" },
+    { name: "Kunyit", quantity: "2 cm", icon: "🌿" },
+    { name: "Cabai Merah", quantity: "5 buah", icon: "🌶️" },
+    { name: "Daun Kari", quantity: "2 lembar", icon: "🍃" },
+    { name: "Santan", quantity: "200ml", icon: "🥥" },
   ];
 
   const steps = [
-    "Peringatan adanya resep boru yang dibuat oleh Chef Azril dolore eu fugiat nulla pariatur?",
-    "Peringatan adanya resep boru yang dibuat oleh Chef Azril incididunt ut labore et dolore.in voluptate velit esse cillum dolore eu fugiat nulla pariatur?",
-    "Peringatan adanya resep boru yang dibuat oleh Chef Azril dolore eu fugiat nulla pariatur?",
+    "Rebus mie kuning hingga matang, tiriskan, dan sisihkan.",
+    "Haluskan bawang merah, bawang putih, kunyit, dan cabai merah untuk bumbu dasar.",
+    "Tumis bumbu halus hingga harum, lalu masukkan daging sapi, aduk hingga berubah warna.",
+    "Tambahkan daun kari dan santan, masak hingga daging empuk dan bumbu meresap.",
+    "Campur mie dengan bumbu, aduk rata, dan sajikan panas dengan taburan bawang goreng.",
   ];
 
   const handleStarPress = (value) => {
@@ -67,7 +73,7 @@ const RecipeScreen = () => {
         <View style={styles.videoContainer}>
           <YoutubePlayer
             height={200}
-            videoId="dQw4w9WgXcQ"
+            videoId="oXz35hDWmqQ"
             play={playing}
             onChangeState={(event) => {
               if (event === "ended") {
@@ -92,7 +98,7 @@ const RecipeScreen = () => {
         </View>
 
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Rendang Palembang</Text>
+          <Text style={styles.title}>Mie Aceh</Text>
           <Text style={styles.reviews}>(13K Reviews)</Text>
         </View>
         <View style={styles.authorContainer}>
@@ -160,7 +166,7 @@ const RecipeScreen = () => {
           <View style={styles.contentContainer}>
             <View style={styles.serveContainer}>
               <Text style={styles.serveText}>1 Serve</Text>
-              <Text style={styles.serveText}>10 Langkah</Text>
+              <Text style={styles.serveText}>5 Langkah</Text>
             </View>
             {steps.map((step, index) => (
               <View key={index} style={styles.stepContainer}>
