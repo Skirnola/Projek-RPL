@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,38 +6,75 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  console.log("Navigation from useNavigation:", navigation);
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Error", "Harap isi semua kolom.");
+      return;
+    }
+
+    const apiUrl = "http://192.168.1.3:5000/api/auth/login";
+
+    try {
+      console.log("Sending login data:", { email, password });
+      const response = await axios.post(apiUrl, {
+        email,
+        password,
+      });
+
+      const { token, user } = response.data;
+      await AsyncStorage.setItem("token", token);
+      await AsyncStorage.setItem("user", JSON.stringify(user));
+
+      Alert.alert("Sukses", "Login berhasil!");
+      navigation.navigate("Home");
+    } catch (error) {
+      Alert.alert(
+        "Error",
+        error.response?.data?.message || "Login gagal. Silakan coba lagi."
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Halo,</Text>
-
       <Text style={styles.heading2}>Selamat Datang!</Text>
 
       <Text style={styles.label}>Email</Text>
-      <TextInput style={styles.input} placeholder="Masukkan Email" />
+      <TextInput
+        style={styles.input}
+        placeholder="Masukkan Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
 
       <Text style={styles.label}>Masukkan Sandi</Text>
       <TextInput
         style={styles.input}
         placeholder="Masukkan Sandi"
         secureTextEntry
+        value={password}
+        onChangeText={setPassword}
       />
 
       <TouchableOpacity>
         <Text style={styles.forgot}>Lupa Sandi?</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={() => navigation.navigate("Home")}
-      >
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginText}>Masuk →</Text>
       </TouchableOpacity>
 
