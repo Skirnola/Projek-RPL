@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -9,8 +9,8 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-const NotificationCard = ({ title, subtitle, time }) => (
-  <View style={styles.card}>
+const NotificationCard = ({ title, subtitle, time, read }) => (
+  <View style={[styles.card, !read && styles.cardUnread]}>
     <View style={styles.cardContent}>
       <View>
         <Text style={styles.title}>{title}</Text>
@@ -26,6 +26,58 @@ const NotificationCard = ({ title, subtitle, time }) => (
 
 export default function NotificationScreen() {
   const navigation = useNavigation();
+  const [activeTab, setActiveTab] = useState("Semua");
+
+  const notifications = [
+    {
+      title: "Peringatan Resep Baru!",
+      subtitle: "Adanya resep baru oleh Chef Azril",
+      time: "10 menit yang lalu",
+      read: true,
+      section: "Hari Ini",
+    },
+    {
+      title: "Peringatan Resep Baru!",
+      subtitle: "Adanya resep baru oleh Chef Azril",
+      time: "30 menit yang lalu",
+      read: false,
+      section: "Hari Ini",
+    },
+    {
+      title: "Peringatan Resep Baru!",
+      subtitle: "Adanya resep baru oleh Chef Azril",
+      time: "30 menit yang lalu",
+      read: true,
+      section: "Hari Ini",
+    },
+    {
+      title: "Peringatan Resep Baru!",
+      subtitle: "Peringatan adanya resep baru yang",
+      time: "10 menit yang lalu",
+      read: false,
+      section: "Kemarin",
+    },
+    {
+      title: "Peringatan Resep Baru!",
+      subtitle: "Adanya resep baru oleh Chef Azril",
+      time: "30 menit yang lalu",
+      read: true,
+      section: "Kemarin",
+    },
+  ];
+
+  const filteredNotifications = notifications.filter((notification) => {
+    if (activeTab === "Semua") return true;
+    if (activeTab === "Terbaca") return notification.read;
+    if (activeTab === "Belum Dibaca") return !notification.read;
+    return true;
+  });
+
+  const groupedNotifications = {
+    "Hari Ini": filteredNotifications.filter((n) => n.section === "Hari Ini"),
+    Kemarin: filteredNotifications.filter((n) => n.section === "Kemarin"),
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -36,40 +88,54 @@ export default function NotificationScreen() {
       </View>
 
       <View style={styles.tabContainer}>
-        <Text style={[styles.tabText, { color: "#F44F5A" }]}>Semua</Text>
-        <Text style={[styles.tabText, { color: "#F44F5A" }]}>Terbaca</Text>
-        <Text style={[styles.tabText, { color: "#F44F5A" }]}>Belum Dibaca</Text>
+        {["Semua", "Terbaca", "Belum Dibaca"].map((tab) => (
+          <TouchableOpacity
+            key={tab}
+            style={[styles.tabButton, activeTab === tab && styles.tabActive]}
+            onPress={() => setActiveTab(tab)}
+            activeOpacity={0.7}
+          >
+            <Text
+              style={[
+                styles.tabText,
+                activeTab === tab ? styles.tabTextActive : null,
+              ]}
+            >
+              {tab}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
 
       <ScrollView>
-        <Text style={styles.sectionTitle}>Today</Text>
-        <NotificationCard
-          title="Peringatan Resep Baru!"
-          subtitle="Adanya resep baru oleh Chef Azril"
-          time="10 menit yang lalu"
-        />
-        <NotificationCard
-          title="Peringatan Resep Baru!"
-          subtitle="Adanya resep baru oleh Chef Azril"
-          time="30 menit yang lalu"
-        />
-        <NotificationCard
-          title="Peringatan Resep Baru!"
-          subtitle="Adanya resep baru oleh Chef Azril"
-          time="30 menit yang lalu"
-        />
-
-        <Text style={styles.sectionTitle}>Kemarin</Text>
-        <NotificationCard
-          title="Peringatan Resep Baru!"
-          subtitle="Peringatan adanya resep baru yang"
-          time="10 menit yang lalu"
-        />
-        <NotificationCard
-          title="Peringatan Resep Baru!"
-          subtitle="Adanya resep baru oleh Chef Azril"
-          time="30 menit yang lalu"
-        />
+        {groupedNotifications["Hari Ini"].length > 0 && (
+          <>
+            <Text style={styles.sectionTitle}>Hari Ini</Text>
+            {groupedNotifications["Hari Ini"].map((notification, index) => (
+              <NotificationCard
+                key={`today-${index}`}
+                title={notification.title}
+                subtitle={notification.subtitle}
+                time={notification.time}
+                read={notification.read}
+              />
+            ))}
+          </>
+        )}
+        {groupedNotifications["Kemarin"].length > 0 && (
+          <>
+            <Text style={styles.sectionTitle}>Kemarin</Text>
+            {groupedNotifications["Kemarin"].map((notification, index) => (
+              <NotificationCard
+                key={`yesterday-${index}`}
+                title={notification.title}
+                subtitle={notification.subtitle}
+                time={notification.time}
+                read={notification.read}
+              />
+            ))}
+          </>
+        )}
       </ScrollView>
 
       <View style={styles.bottomNav}>
@@ -117,10 +183,18 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     alignItems: "center",
   },
+  tabButton: {
+    paddingVertical: 4,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+  },
   tabText: {
     fontSize: 13,
     fontWeight: "bold",
-    justifyContent: "center",
+    color: "#F44F5A",
+  },
+  tabTextActive: {
+    color: "#F44F5A",
   },
   tabActive: {
     backgroundColor: "#FFE457",
@@ -139,6 +213,9 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
+  },
+  cardUnread: {
+    backgroundColor: "#E8F0E8",
   },
   cardContent: {
     flexDirection: "row",
@@ -183,16 +260,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 5,
     marginBottom: 10,
-  },
-  addButton: {
-    backgroundColor: "#f67d7d",
-    padding: 10,
-    borderRadius: 30,
-  },
-  addButtonText: {
-    color: "#fff",
-    fontSize: 24,
-    fontWeight: "bold",
   },
   plusButton: {
     backgroundColor: "#FF6B6B",
